@@ -1,0 +1,12 @@
+{
+    "name": "Mehedi Hasan Portfolio",
+    "short_name": "Mehedi Portfolio",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0A0E14",
+    "theme_color": "#0A0E14",
+    "description": "Mehedi Hasan - Flutter & Native Android Developer Portfolio",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": []
+}
