@@ -14,48 +14,58 @@ class AboutView extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = Responsive.isMobile(context);
 
+    final titleBlock = SectionTitle(
+      tag: 'About Me',
+      title: 'Turning ideas into\nreal mobile products.',
+    );
+
+    const detailsBlock = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          AppData.summary,
+          style: const TextStyle(
+            color: AppColors.textSecondary,
+            fontSize: 15.5,
+            height: 1.7,
+          ),
+        ),
+        const SizedBox(height: 28),
+        Wrap(
+          spacing: 16,
+          runSpacing: 16,
+          children: const [
+            _InfoStat(value: '1+', label: 'Year of\nExperience'),
+            _InfoStat(value: '4', label: 'Live\nProjects'),
+            _InfoStat(value: '3.96', label: 'CGPA out\nof 4.00'),
+            _InfoStat(value: '2', label: 'Platforms\n(Android/iOS)'),
+          ],
+        ),
+      ],
+    );
+
     return SectionContainer(
       sectionKey: controller.aboutKey,
       background: AppColors.surface,
-      child: Flex(
-        direction: isMobile ? Axis.vertical : Axis.horizontal,
+      // On mobile the section stacks vertically inside a scroll view, where
+      // the height constraint is unbounded — Expanded/flex can't be used
+      // there. On desktop/tablet it lays out horizontally with a bounded
+      // width, so Expanded works fine to control the column ratio.
+      child: isMobile
+          ? Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            flex: 4,
-            child: SectionTitle(
-              tag: 'About Me',
-              title: 'Turning ideas into\nreal mobile products.',
-            ),
-          ),
-          SizedBox(width: isMobile ? 0 : 60, height: isMobile ? 32 : 0),
-          Expanded(
-            flex: 6,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  AppData.summary,
-                  style: const TextStyle(
-                    color: AppColors.textSecondary,
-                    fontSize: 15.5,
-                    height: 1.7,
-                  ),
-                ),
-                const SizedBox(height: 28),
-                Wrap(
-                  spacing: 16,
-                  runSpacing: 16,
-                  children: const [
-                    _InfoStat(value: '1+', label: 'Year of\nExperience'),
-                    _InfoStat(value: '4', label: 'Live\nProjects'),
-                    _InfoStat(value: '3.96', label: 'CGPA out\nof 4.00'),
-                    _InfoStat(value: '2', label: 'Platforms\n(Android/iOS)'),
-                  ],
-                ),
-              ],
-            ),
-          ),
+          titleBlock,
+          const SizedBox(height: 32),
+          detailsBlock,
+        ],
+      )
+          : Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(flex: 4, child: titleBlock),
+          const SizedBox(width: 60),
+          Expanded(flex: 6, child: detailsBlock),
         ],
       ),
     );

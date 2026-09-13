@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../common/constants/app_data.dart';
-import '../../common/theme/app_colors.dart';
-import '../../common/widgets/responsive.dart';
-import '../../common/widgets/section_container.dart';
-import '../../core/controllers/nav_controller.dart';
-import '../../core/utils/launcher_util.dart';
+import '../../../common/constants/app_data.dart';
+import '../../../common/theme/app_colors.dart';
+import '../../../common/widgets/responsive.dart';
+import '../../../common/widgets/section_container.dart';
+import '../../../core/controllers/nav_controller.dart';
+import '../../../core/utils/launcher_util.dart';
+import '../widget/contactChipWidget.dart';
+import '../widget/heloAvaterWidget.dart';
 
 class HomeView extends StatelessWidget {
   final NavController controller;
@@ -18,7 +20,7 @@ class HomeView extends StatelessWidget {
 
     return SectionContainer(
       sectionKey: controller.homeKey,
-      extraPadding: const EdgeInsets.only(top: 40),
+      extraPadding: const EdgeInsets.only(top: 20),
       child: Flex(
         direction: isMobile ? Axis.vertical : Axis.horizontal,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,7 +34,7 @@ class HomeView extends StatelessWidget {
                   ? CrossAxisAlignment.center
                   : CrossAxisAlignment.start,
               children: [
-                _Badge(),
+                Badge(),
                 const SizedBox(height: 22),
                 Text(
                   'Hi, I\'m ${AppData.name}',
@@ -116,17 +118,17 @@ class HomeView extends StatelessWidget {
                   spacing: 18,
                   runSpacing: 10,
                   children: [
-                    _ContactChip(
+                    ContactChip(
                       icon: FontAwesomeIcons.envelope,
                       label: AppData.email,
                       onTap: () => LauncherUtil.sendEmail(AppData.email),
                     ),
-                    _ContactChip(
+                    ContactChip(
                       icon: FontAwesomeIcons.phone,
                       label: AppData.phone,
                       onTap: () => LauncherUtil.callPhone(AppData.phone),
                     ),
-                    _ContactChip(
+                    const ContactChip(
                       icon: FontAwesomeIcons.locationDot,
                       label: AppData.location,
                     ),
@@ -136,126 +138,12 @@ class HomeView extends StatelessWidget {
             ),
           ),
           SizedBox(height: isMobile ? 48 : 0, width: isMobile ? 0 : 40),
-          if (!isMobile) Expanded(flex: 4, child: _HeroAvatar()),
-          if (isMobile) _HeroAvatar(size: 220),
+          if (!isMobile) Expanded(flex: 4, child: HeroAvatar()),
+          if (isMobile) HeroAvatar(size: 220),
         ],
       ),
     );
   }
 }
 
-class _Badge extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-      decoration: BoxDecoration(
-        color: AppColors.primary.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.primary.withOpacity(0.4)),
-      ),
-      child: const Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _Dot(),
-          SizedBox(width: 8),
-          Text(
-            'Available for new opportunities',
-            style: TextStyle(
-              color: AppColors.primary,
-              fontSize: 12.5,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
-class _Dot extends StatelessWidget {
-  const _Dot();
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 8,
-      height: 8,
-      decoration: const BoxDecoration(
-        color: AppColors.primary,
-        shape: BoxShape.circle,
-      ),
-    );
-  }
-}
-
-class _ContactChip extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final VoidCallback? onTap;
-
-  const _ContactChip({required this.icon, required this.label, this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(8),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          FaIcon(icon, size: 14, color: AppColors.primary),
-          const SizedBox(width: 8),
-          Text(
-            label,
-            style: const TextStyle(color: AppColors.textSecondary, fontSize: 13.5),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _HeroAvatar extends StatelessWidget {
-  final double size;
-  const _HeroAvatar({this.size = 300});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: AppColors.heroGlow,
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.primary.withOpacity(0.35),
-              blurRadius: 60,
-              spreadRadius: 6,
-            ),
-          ],
-        ),
-        padding: const EdgeInsets.all(6),
-        child: Container(
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.surface,
-          ),
-          alignment: Alignment.center,
-          child: Text(
-            'MH',
-            style: TextStyle(
-              fontSize: size * 0.32,
-              fontWeight: FontWeight.w800,
-              foreground: Paint()
-                ..shader = AppColors.heroGlow.createShader(
-                  Rect.fromLTWH(0, 0, size, size),
-                ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}

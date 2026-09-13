@@ -7,7 +7,7 @@ import '../about/about_view.dart';
 import '../contact/contact_view.dart';
 import '../education/education_view.dart';
 import '../experience/experience_view.dart';
-import '../home/home_view.dart';
+import '../home/view/home_view.dart';
 import '../projects/projects_view.dart';
 import '../skills/skills_view.dart';
 
