@@ -37,11 +37,12 @@ class AppData {
         'Xcode & iOS',
         'Clean Architecture',
         'GetX Architecture Pattern',
+        'BLock',
         'MVVM & MVC Patterns',
       ],
     ),
     SkillCategoryModel(
-      title: 'Backend & Databases',
+      title: 'Backend & Databases (Learning & Building)',
       skills: [
         'Java Spring Boot',
         'SQL Database (MySQL & PostgreSQL)',
@@ -66,29 +67,7 @@ class AppData {
     ),
   ];
 
-  static const List<String> skills = [
-    'Flutter Framework & Dart',
-    'Kotlin (Native Android)',
-    'Java (Native Android)',
-    'Java Spring Boot',
-    'SQL Database (MySQL & PostgreSQL)',
-    'C++',
-    'Competitive Programming',
-    'Linux Administration',
-    'RHCSA (CSL Academy)',
-    'Clean Architecture',
-    'GetX Architecture Pattern',
-    'MVVM & MVC Patterns',
-    'SOLID Principles & OOP',
-    'REST API Integration',
-    'Socket.io (Realtime)',
-    'Firebase Services',
-    'Hive & SQLite (Local DB)',
-    'Git & GitHub (Version Control)',
-    'Postman',
-    'Figma UI Design',
-    'Xcode & iOS',
-  ];
+
 
   static const List<ExperienceModel> experience = [
     ExperienceModel(

@@ -21,13 +21,13 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
 
     return ClipRect(
       child: BackdropFilter(
-        // Stronger blur + saturation-friendly: content behind looks frosted
+        /// Stronger blur + saturation-friendly: content behind looks frosted
         filter: ImageFilter.blur(sigmaX: 28, sigmaY: 28),
         child: Container(
           width: double.infinity,
           height: preferredSize.height,
           decoration: BoxDecoration(
-            // Liquid glass tint: light catches the top-left, fades toward bottom-right
+            /// Liquid glass tint: light catches the top-left, fades toward bottom-right
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -55,7 +55,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              // Specular highlight along the top edge
+              /// Specular highlight along the top edge
               Positioned(
                 top: 0,
                 left: 0,
@@ -73,7 +73,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
               ),
-              // Soft inner glow under the highlight
+              /// Soft inner glow under the highlight
               Positioned(
                 top: 0,
                 left: 0,
@@ -142,7 +142,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                                 },
                               ),
                             const SizedBox(width: 12),
-                            _ResumeButton(),
+                            ResumeButton(),
                           ],
                         ),
                       )
@@ -233,12 +233,12 @@ class _NavButtonState extends State<_NavButton> {
   }
 }
 
-class _ResumeButton extends StatefulWidget {
+class ResumeButton extends StatefulWidget {
   @override
-  State<_ResumeButton> createState() => _ResumeButtonState();
+  State<ResumeButton> createState() => _ResumeButtonState();
 }
 
-class _ResumeButtonState extends State<_ResumeButton> {
+class _ResumeButtonState extends State<ResumeButton> {
   bool _isHovered = false;
 
   @override
@@ -251,7 +251,7 @@ class _ResumeButtonState extends State<_ResumeButton> {
         onTap: () {},
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 9),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           decoration: BoxDecoration(
             color: _isHovered
                 ? AppColors.primary
@@ -259,7 +259,7 @@ class _ResumeButtonState extends State<_ResumeButton> {
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
               color: AppColors.primary,
-              width: 1.2,
+              width: 1,
             ),
             boxShadow: _isHovered
                 ? [
@@ -275,7 +275,7 @@ class _ResumeButtonState extends State<_ResumeButton> {
             'Resume',
             style: TextStyle(
               color: _isHovered ? Colors.black : AppColors.primary,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w500,
               fontSize: 13.5,
             ),
           ),
