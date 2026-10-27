@@ -26,7 +26,6 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
         child: Container(
           width: double.infinity,
           height: preferredSize.height,
-          padding: EdgeInsets.symmetric(horizontal: hPad),
           decoration: BoxDecoration(
             // Liquid glass tint: light catches the top-left, fades toward bottom-right
             gradient: LinearGradient(
@@ -95,65 +94,68 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
               ),
-              Row(
-                children: [
-                  // Logo
-                  GestureDetector(
-                    onTap: () => controller.scrollTo(controller.homeKey),
-                    child: MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: RichText(
-                        text: const TextSpan(
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.textPrimary,
-                            letterSpacing: 0.5,
-                          ),
-                          children: [
-                            TextSpan(text: 'Mehedi'),
-                            TextSpan(
-                              text: '.',
-                              style: TextStyle(
-                                color: AppColors.primary,
-                                fontWeight: FontWeight.w900,
-                              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: hPad),
+                child: Row(
+                  children: [
+                    // Logo
+                    GestureDetector(
+                      onTap: () => controller.scrollTo(controller.homeKey),
+                      child: MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: RichText(
+                          text: const TextSpan(
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w800,
+                              color: AppColors.textPrimary,
+                              letterSpacing: 0.5,
                             ),
-                            TextSpan(text: 'dev'),
-                          ],
+                            children: [
+                              TextSpan(text: 'Mehedi'),
+                              TextSpan(
+                                text: '.',
+                                style: TextStyle(
+                                  color: AppColors.primary,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                              TextSpan(text: 'dev'),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const Spacer(),
-                  if (isDesktop)
-                    AnimatedBuilder(
-                      animation: controller,
-                      builder: (context, _) => Row(
-                        children: [
-                          for (int i = 0; i < controller.navItems.length; i++)
-                            _NavButton(
-                              label: controller.navItems[i].label,
-                              isActive: controller.activeIndex == i,
-                              onTap: () {
-                                controller.setActive(i);
-                                controller.scrollTo(controller.navItems[i].key);
-                              },
-                            ),
-                          const SizedBox(width: 12),
-                          _ResumeButton(),
-                        ],
+                    const Spacer(),
+                    if (isDesktop)
+                      AnimatedBuilder(
+                        animation: controller,
+                        builder: (context, _) => Row(
+                          children: [
+                            for (int i = 0; i < controller.navItems.length; i++)
+                              _NavButton(
+                                label: controller.navItems[i].label,
+                                isActive: controller.activeIndex == i,
+                                onTap: () {
+                                  controller.setActive(i);
+                                  controller.scrollTo(controller.navItems[i].key);
+                                },
+                              ),
+                            const SizedBox(width: 12),
+                            _ResumeButton(),
+                          ],
+                        ),
+                      )
+                    else
+                      IconButton(
+                        onPressed: onMenuTap,
+                        icon: const Icon(
+                          Icons.menu_rounded,
+                          color: AppColors.textPrimary,
+                        ),
                       ),
-                    )
-                  else
-                    IconButton(
-                      onPressed: onMenuTap,
-                      icon: const Icon(
-                        Icons.menu_rounded,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

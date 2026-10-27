@@ -141,8 +141,33 @@ class _ContactCard extends StatefulWidget {
   State<_ContactCard> createState() => _ContactCardState();
 }
 
-class _ContactCardState extends State<_ContactCard> {
+class _ContactCardState extends State<_ContactCard>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animController;
+  late Animation<double> _gradientAnimation;
   bool _isHovered = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _animController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 3200),
+    )..repeat(reverse: true);
+
+    _gradientAnimation = Tween<double>(begin: -1.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animController,
+        curve: Curves.easeInOut,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -184,11 +209,26 @@ class _ContactCardState extends State<_ContactCard> {
             borderRadius: BorderRadius.circular(16),
             child: Column(
               children: [
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  height: 3,
-                  width: double.infinity,
-                  color: _isHovered ? AppColors.primary : Colors.transparent,
+                // Continuously Animated Top Gradient Line
+                AnimatedBuilder(
+                  animation: _gradientAnimation,
+                  builder: (context, child) {
+                    return Container(
+                      height: 3.5,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: const [
+                            AppColors.primary,
+                            AppColors.secondary,
+                            AppColors.primary,
+                          ],
+                          begin: Alignment(_gradientAnimation.value - 1.0, 0),
+                          end: Alignment(_gradientAnimation.value + 1.0, 0),
+                        ),
+                      ),
+                    );
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.all(22),

@@ -136,26 +136,18 @@ class _ProjectCardState extends State<_ProjectCard> {
                           Container(
                             height: 280,
                             width: double.infinity,
-                            padding: const EdgeInsets.all(16),
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [Color(0xFF0F1520), Color(0xFF182232)],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                              ),
-                            ),
-                            child: Center(
-                              child: widget.project.image != null &&
-                                      widget.project.image!.isNotEmpty
-                                  ? Image.asset(
-                                      widget.project.image!,
-                                      fit: BoxFit.contain,
-                                      errorBuilder:
-                                          (context, error, stackTrace) =>
-                                              _buildFallbackMockup(),
-                                    )
-                                  : _buildFallbackMockup(),
-                            ),
+                            color: AppColors.surfaceLight,
+                            child: widget.project.image != null &&
+                                    widget.project.image!.isNotEmpty
+                                ? Image.asset(
+                                    widget.project.image!,
+                                    fit: BoxFit.cover,
+                                    alignment: Alignment.topCenter,
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            _buildFallbackMockup(),
+                                  )
+                                : _buildFallbackMockup(),
                           ),
                           Positioned(
                             top: 12,
@@ -340,33 +332,23 @@ class _ProjectCardState extends State<_ProjectCard> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(16),
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFF0F1520), Color(0xFF182232)],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
-                        ),
-                        child: Center(
-                          child: widget.project.image != null &&
-                                  widget.project.image!.isNotEmpty
-                              ? AnimatedScale(
-                                  scale: _isHovered ? 1.04 : 1.0,
-                                  duration: const Duration(milliseconds: 250),
-                                  curve: Curves.easeOutCubic,
-                                  child: Image.asset(
-                                    widget.project.image!,
-                                    fit: BoxFit.contain,
-                                    errorBuilder:
-                                        (context, error, stackTrace) =>
-                                            _buildFallbackMockup(),
-                                  ),
-                                )
-                              : _buildFallbackMockup(),
-                        ),
-                      ),
+                      child: widget.project.image != null &&
+                              widget.project.image!.isNotEmpty
+                          ? AnimatedScale(
+                              scale: _isHovered ? 1.04 : 1.0,
+                              duration: const Duration(milliseconds: 250),
+                              curve: Curves.easeOutCubic,
+                              child: Image.asset(
+                                widget.project.image!,
+                                width: double.infinity,
+                                height: double.infinity,
+                                fit: BoxFit.cover,
+                                alignment: Alignment.topCenter,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    _buildFallbackMockup(),
+                              ),
+                            )
+                          : _buildFallbackMockup(),
                     ),
 
                     // Top-Right Expand Action Button

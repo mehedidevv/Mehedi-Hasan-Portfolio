@@ -11,8 +11,9 @@ class AppData {
   static const String name = 'Mehedi Hasan';
   static const String role = 'Software Developer';
   static const String tagline =
-      'I build fast, clean and scalable mobile applications with Flutter, '
-      'and craft delightful, responsive user experiences.';
+      'I design, develop, and maintain scalable software solutions, '
+      'combining software engineering, system administration, and modern technologies '
+      'to build reliable, efficient, and innovative digital experiences.';
 
   static const String summary =
       'Secure a responsible career opportunity to fully utilize my training '

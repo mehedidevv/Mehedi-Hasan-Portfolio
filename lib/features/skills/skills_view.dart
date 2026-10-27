@@ -89,8 +89,33 @@ class _SkillCategoryCard extends StatefulWidget {
   State<_SkillCategoryCard> createState() => _SkillCategoryCardState();
 }
 
-class _SkillCategoryCardState extends State<_SkillCategoryCard> {
+class _SkillCategoryCardState extends State<_SkillCategoryCard>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animController;
+  late Animation<double> _gradientAnimation;
   bool _isHovered = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _animController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 3200),
+    )..repeat(reverse: true);
+
+    _gradientAnimation = Tween<double>(begin: -1.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animController,
+        curve: Curves.easeInOut,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,16 +150,26 @@ class _SkillCategoryCardState extends State<_SkillCategoryCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Top Accent Line
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 220),
-                height: 3,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: _isHovered
-                      ? AppColors.heroGlow
-                      : AppColors.primaryGradient,
-                ),
+              // Continuously Animated Flowing Gradient Accent Line
+              AnimatedBuilder(
+                animation: _gradientAnimation,
+                builder: (context, child) {
+                  return Container(
+                    height: 3.5,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: const [
+                          AppColors.primary,
+                          AppColors.secondary,
+                          AppColors.primary,
+                        ],
+                        begin: Alignment(_gradientAnimation.value - 1.0, 0),
+                        end: Alignment(_gradientAnimation.value + 1.0, 0),
+                      ),
+                    ),
+                  );
+                },
               ),
               Padding(
                 padding: EdgeInsets.all(Responsive.isMobile(context) ? 16 : 20),
