@@ -27,7 +27,7 @@ class SectionContainer extends StatelessWidget {
       color: background,
       padding: EdgeInsets.symmetric(
         horizontal: hPad,
-        vertical: isMobile ? 56 : 96,
+        vertical: isMobile ? 36 : 58,
       ).add(extraPadding ?? EdgeInsets.zero),
       child: Center(
         child: ConstrainedBox(

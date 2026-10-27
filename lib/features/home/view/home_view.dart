@@ -20,7 +20,7 @@ class HomeView extends StatelessWidget {
 
     return SectionContainer(
       sectionKey: controller.homeKey,
-      extraPadding: const EdgeInsets.only(top: 20),
+      extraPadding: const EdgeInsets.only(top: 10),
       child: Flex(
         direction: isMobile ? Axis.vertical : Axis.horizontal,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,8 +34,43 @@ class HomeView extends StatelessWidget {
                   ? CrossAxisAlignment.center
                   : CrossAxisAlignment.start,
               children: [
-                Badge(),
-                const SizedBox(height: 22),
+                // Top Status Badge
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: AppColors.primary.withValues(alpha: 0.3),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 7,
+                        height: 7,
+                        decoration: const BoxDecoration(
+                          color: AppColors.primary,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      const Text(
+                        'SOFTWARE ENGINEER & FLUTTER DEVELOPER',
+                        style: TextStyle(
+                          color: AppColors.primary,
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 1.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 18),
+
                 Text(
                   'Hi, I\'m ${AppData.name}',
                   textAlign: isMobile ? TextAlign.center : TextAlign.start,
@@ -81,7 +116,8 @@ class HomeView extends StatelessWidget {
                   runSpacing: 14,
                   children: [
                     ElevatedButton(
-                      onPressed: () => controller.scrollTo(controller.contactKey),
+                      onPressed: () =>
+                          controller.scrollTo(controller.contactKey),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         foregroundColor: Colors.black,
@@ -97,7 +133,8 @@ class HomeView extends StatelessWidget {
                       ),
                     ),
                     OutlinedButton(
-                      onPressed: () => controller.scrollTo(controller.projectsKey),
+                      onPressed: () =>
+                          controller.scrollTo(controller.projectsKey),
                       style: OutlinedButton.styleFrom(
                         side: const BorderSide(color: AppColors.border),
                         foregroundColor: AppColors.textPrimary,
@@ -138,12 +175,21 @@ class HomeView extends StatelessWidget {
             ),
           ),
           SizedBox(height: isMobile ? 48 : 0, width: isMobile ? 0 : 40),
-          if (!isMobile) Expanded(flex: 4, child: HeroAvatar()),
-          if (isMobile) HeroAvatar(size: 220),
+          if (!isMobile) ...[
+            const Expanded(
+              flex: 4,
+              child: HeroAvatar(
+                alignment: Alignment.centerRight,
+              ),
+            ),
+          ] else ...[
+            const HeroAvatar(
+              size: 220,
+              alignment: Alignment.center,
+            ),
+          ],
         ],
       ),
     );
   }
 }
-
-

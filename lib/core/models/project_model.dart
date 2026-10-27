@@ -3,12 +3,14 @@ class ProjectModel {
   final String description;
   final List<String> tags;
   final List<ProjectLink> links;
+  final String? image;
 
   const ProjectModel({
     required this.title,
     required this.description,
     required this.tags,
     this.links = const [],
+    this.image,
   });
 }
 

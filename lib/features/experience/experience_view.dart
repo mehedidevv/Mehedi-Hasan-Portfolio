@@ -22,8 +22,12 @@ class ExperienceView extends StatelessWidget {
             tag: 'Experience',
             title: 'Where I\'ve Worked',
           ),
-          const SizedBox(height: 40),
-          for (final exp in AppData.experience) _ExperienceCard(exp: exp),
+          const SizedBox(height: 28),
+          for (int i = 0; i < AppData.experience.length; i++)
+            _ExperienceCard(
+              exp: AppData.experience[i],
+              isLast: i == AppData.experience.length - 1,
+            ),
         ],
       ),
     );
@@ -32,7 +36,12 @@ class ExperienceView extends StatelessWidget {
 
 class _ExperienceCard extends StatelessWidget {
   final ExperienceModel exp;
-  const _ExperienceCard({required this.exp});
+  final bool isLast;
+
+  const _ExperienceCard({
+    required this.exp,
+    this.isLast = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -51,20 +60,21 @@ class _ExperienceCard extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
               ),
-              Expanded(
-                child: Container(
-                  width: 2,
-                  color: AppColors.border,
+              if (!isLast)
+                Expanded(
+                  child: Container(
+                    width: 2,
+                    color: AppColors.border,
+                  ),
                 ),
-              ),
             ],
           ),
-          const SizedBox(width: 22),
+          const SizedBox(width: 20),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 36),
+              padding: EdgeInsets.only(bottom: isLast ? 0 : 28),
               child: Container(
-                padding: const EdgeInsets.all(22),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   color: AppColors.card,
                   borderRadius: BorderRadius.circular(14),
@@ -88,9 +98,11 @@ class _ExperienceCard extends StatelessWidget {
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 4),
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
                           decoration: BoxDecoration(
-                            color: AppColors.primary.withOpacity(0.12),
+                            color: AppColors.primary.withValues(alpha: 0.12),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text(
@@ -114,23 +126,28 @@ class _ExperienceCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 14),
-                    for (final point in exp.points)
+                    for (int j = 0; j < exp.points.length; j++)
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
+                        padding: EdgeInsets.only(
+                          bottom: j == exp.points.length - 1 ? 0 : 8,
+                        ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Padding(
-                              padding: EdgeInsets.only(top: 6, right: 10),
-                              child: Icon(Icons.circle,
-                                  size: 5, color: AppColors.primary),
+                              padding: EdgeInsets.only(top: 8, right: 10),
+                              child: Icon(
+                                Icons.circle,
+                                size: 5,
+                                color: AppColors.primary,
+                              ),
                             ),
                             Expanded(
                               child: Text(
-                                point,
+                                exp.points[j],
                                 style: const TextStyle(
                                   color: AppColors.textSecondary,
-                                  height: 1.6,
+                                  height: 1.5,
                                   fontSize: 14.5,
                                 ),
                               ),

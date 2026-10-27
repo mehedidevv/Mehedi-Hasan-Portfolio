@@ -14,7 +14,7 @@ class AboutView extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = Responsive.isMobile(context);
 
-    final titleBlock = SectionTitle(
+    const titleBlock = SectionTitle(
       tag: 'About Me',
       title: 'Turning ideas into\nreal mobile products.',
     );
@@ -24,21 +24,22 @@ class AboutView extends StatelessWidget {
       children: [
         Text(
           AppData.summary,
-          style: const TextStyle(
+          style: TextStyle(
             color: AppColors.textSecondary,
             fontSize: 15.5,
-            height: 1.7,
+            height: 1.5,
           ),
         ),
-        const SizedBox(height: 28),
+        SizedBox(height: 18),
         Wrap(
-          spacing: 16,
-          runSpacing: 16,
-          children: const [
-            _InfoStat(value: '1+', label: 'Year of\nExperience'),
-            _InfoStat(value: '4', label: 'Live\nProjects'),
+          spacing: 14,
+          runSpacing: 14,
+          children: [
+            _InfoStat(value: '3+', label: 'Year of\nExperience'),
+            _InfoStat(value: '20+', label: 'Total\nProjects'),
+            _InfoStat(value: '8+', label: 'Live\nProjects'),
             _InfoStat(value: '3.96', label: 'CGPA out\nof 4.00'),
-            _InfoStat(value: '2', label: 'Platforms\n(Android/iOS)'),
+
           ],
         ),
       ],
@@ -47,67 +48,107 @@ class AboutView extends StatelessWidget {
     return SectionContainer(
       sectionKey: controller.aboutKey,
       background: AppColors.surface,
-      // On mobile the section stacks vertically inside a scroll view, where
-      // the height constraint is unbounded — Expanded/flex can't be used
-      // there. On desktop/tablet it lays out horizontally with a bounded
-      // width, so Expanded works fine to control the column ratio.
       child: isMobile
-          ? Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          titleBlock,
-          const SizedBox(height: 32),
-          detailsBlock,
-        ],
-      )
-          : Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(flex: 4, child: titleBlock),
-          const SizedBox(width: 60),
-          Expanded(flex: 6, child: detailsBlock),
-        ],
-      ),
+          ? const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                titleBlock,
+                SizedBox(height: 20),
+                detailsBlock,
+              ],
+            )
+          : const Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(flex: 4, child: titleBlock),
+                SizedBox(width: 40),
+                Expanded(flex: 6, child: detailsBlock),
+              ],
+            ),
     );
   }
 }
 
-class _InfoStat extends StatelessWidget {
+class _InfoStat extends StatefulWidget {
   final String value;
   final String label;
   const _InfoStat({required this.value, required this.label});
 
   @override
+  State<_InfoStat> createState() => _InfoStatState();
+}
+
+class _InfoStatState extends State<_InfoStat> {
+  bool _hover = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 140,
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: AppColors.card,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            value,
-            style: const TextStyle(
-              color: AppColors.primary,
-              fontSize: 26,
-              fontWeight: FontWeight.w800,
-            ),
+    final rawVal = double.tryParse(widget.value.replaceAll('+', '')) ?? 0.0;
+    final isDecimal = widget.value.contains('.');
+    final hasPlus = widget.value.contains('+');
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hover = true),
+      onExit: (_) => setState(() => _hover = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeOutCubic,
+        transform: Matrix4.translationValues(0, _hover ? -4 : 0, 0),
+        width: 135,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color: AppColors.card,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: _hover ? AppColors.primary : AppColors.border,
+            width: 1.2,
           ),
-          const SizedBox(height: 6),
-          Text(
-            label,
-            style: const TextStyle(
-              color: AppColors.textSecondary,
-              fontSize: 12.5,
-              height: 1.3,
+          boxShadow: [
+            BoxShadow(
+              color: _hover
+                  ? AppColors.primary.withValues(alpha: 0.15)
+                  : Colors.transparent,
+              blurRadius: 16,
+              offset: const Offset(0, 6),
             ),
-          ),
-        ],
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TweenAnimationBuilder<double>(
+              tween: Tween<double>(begin: 0, end: rawVal),
+              duration: const Duration(milliseconds: 1400),
+              curve: Curves.easeOutCubic,
+              builder: (context, val, child) {
+                String formattedStr;
+                if (isDecimal) {
+                  formattedStr = val.toStringAsFixed(2);
+                } else {
+                  formattedStr = '${val.toInt()}${hasPlus ? '+' : ''}';
+                }
+                return Text(
+                  formattedStr,
+                  style: const TextStyle(
+                    color: AppColors.primary,
+                    fontSize: 26,
+                    fontWeight: FontWeight.w800,
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 4),
+            Text(
+              widget.label,
+              style: TextStyle(
+                color:
+                    _hover ? AppColors.textPrimary : AppColors.textSecondary,
+                fontSize: 12.5,
+                height: 1.25,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

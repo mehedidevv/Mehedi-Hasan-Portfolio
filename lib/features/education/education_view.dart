@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../common/constants/app_data.dart';
 import '../../common/theme/app_colors.dart';
+import '../../common/widgets/responsive.dart';
 import '../../common/widgets/section_container.dart';
 import '../../common/widgets/section_title.dart';
 import '../../core/controllers/nav_controller.dart';
@@ -11,7 +12,9 @@ class EducationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final edu = AppData.education;
+    const edu = AppData.education;
+    final isMobile = Responsive.isMobile(context);
+
     return SectionContainer(
       sectionKey: controller.educationKey,
       child: Column(
@@ -21,10 +24,10 @@ class EducationView extends StatelessWidget {
             tag: 'Education',
             title: 'Academic Background',
           ),
-          const SizedBox(height: 36),
+          const SizedBox(height: 28),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(isMobile ? 18 : 22),
             decoration: BoxDecoration(
               color: AppColors.card,
               borderRadius: BorderRadius.circular(14),
@@ -34,15 +37,18 @@ class EducationView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.all(14),
+                  padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.12),
+                    color: AppColors.primary.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(Icons.school_rounded,
-                      color: AppColors.primary, size: 28),
+                  child: const Icon(
+                    Icons.school_rounded,
+                    color: AppColors.primary,
+                    size: 26,
+                  ),
                 ),
-                const SizedBox(width: 20),
+                SizedBox(width: isMobile ? 14 : 20),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,9 +68,11 @@ class EducationView extends StatelessWidget {
                           ),
                           Container(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 4),
+                              horizontal: 10,
+                              vertical: 4,
+                            ),
                             decoration: BoxDecoration(
-                              color: AppColors.primary.withOpacity(0.12),
+                              color: AppColors.primary.withValues(alpha: 0.12),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(
@@ -88,23 +96,28 @@ class EducationView extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 14),
-                      for (final point in edu.points)
+                      for (int i = 0; i < edu.points.length; i++)
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 6),
+                          padding: EdgeInsets.only(
+                            bottom: i == edu.points.length - 1 ? 0 : 8,
+                          ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Padding(
-                                padding: EdgeInsets.only(top: 6, right: 10),
-                                child: Icon(Icons.circle,
-                                    size: 5, color: AppColors.primary),
+                                padding: EdgeInsets.only(top: 8, right: 10),
+                                child: Icon(
+                                  Icons.circle,
+                                  size: 5,
+                                  color: AppColors.primary,
+                                ),
                               ),
                               Expanded(
                                 child: Text(
-                                  point,
+                                  edu.points[i],
                                   style: const TextStyle(
                                     color: AppColors.textSecondary,
-                                    height: 1.6,
+                                    height: 1.5,
                                     fontSize: 14.5,
                                   ),
                                 ),
