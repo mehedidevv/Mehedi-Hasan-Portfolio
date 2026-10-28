@@ -5,7 +5,7 @@ import '../../../common/theme/app_colors.dart';
 
 
 class ActionButton extends StatefulWidget {
-  final IconData icon;
+  final dynamic icon;
   final String label;
   final bool isPrimary;
   final VoidCallback onTap;
@@ -97,6 +97,17 @@ class _ActionButtonState extends State<ActionButton> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              if (widget.icon is IconData)
+              Icon(
+                widget.icon as IconData,
+                size: 16,
+                color: primary
+                    ? Colors.black
+                    : _isHovered
+                    ? AppColors.primary
+                    : AppColors.textPrimary,
+              )
+            else
               FaIcon(
                 widget.icon,
                 size: 16,

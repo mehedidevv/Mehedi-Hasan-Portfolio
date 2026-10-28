@@ -26,7 +26,7 @@ class AppData {
   static const String location = 'Mohakhali, Dhaka';
   static const String github = 'https://github.com/mehedidevv';
   static const String linkedin = 'https://www.linkedin.com/in/mehedi-hasan-5a0b2a224/';
-  static const String resumeUrl = '';
+  static const String resumeUrl = 'https://drive.google.com/file/d/1XJ0JP0rO0l42vxM3Yt2DROPwwcSYVdIm/view?usp=drive_link';
 
   static const List<SkillCategoryModel> skillCategories = [
     SkillCategoryModel(

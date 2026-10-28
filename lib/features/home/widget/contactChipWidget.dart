@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../common/theme/app_colors.dart';
 
 class ContactChip extends StatefulWidget {
-  final IconData icon;
+  final dynamic icon;
   final String label;
   final VoidCallback? onTap;
 

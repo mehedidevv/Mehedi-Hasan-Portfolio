@@ -64,7 +64,7 @@ class SkillsView extends StatelessWidget {
     );
   }
 
-  IconData _getCategoryIcon(int index) {
+  dynamic _getCategoryIcon(int index) {
     switch (index) {
       case 0:
         return FontAwesomeIcons.mobileScreenButton;
@@ -79,7 +79,7 @@ class SkillsView extends StatelessWidget {
 
 class _SkillCategoryCard extends StatefulWidget {
   final SkillCategoryModel category;
-  final IconData icon;
+  final dynamic icon;
 
   const _SkillCategoryCard({
     required this.category,
@@ -206,11 +206,17 @@ class _SkillCategoryCardState extends State<_SkillCategoryCard>
                                 color: AppColors.primary.withValues(alpha: 0.2),
                               ),
                             ),
-                            child: FaIcon(
-                              widget.icon,
-                              size: 18,
-                              color: AppColors.primary,
-                            ),
+                            child: widget.icon is IconData
+                            ? Icon(
+                                widget.icon as IconData,
+                                size: 18,
+                                color: AppColors.primary,
+                              )
+                            : FaIcon(
+                                widget.icon,
+                                size: 18,
+                                color: AppColors.primary,
+                              ),
                           ),
                           const SizedBox(width: 12),
                           Expanded(

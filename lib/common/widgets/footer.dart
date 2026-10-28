@@ -93,7 +93,7 @@ class AppFooter extends StatelessWidget {
 }
 
 class _SocialIconButton extends StatefulWidget {
-  final IconData icon;
+  final dynamic icon;
   final VoidCallback onTap;
 
   const _SocialIconButton({

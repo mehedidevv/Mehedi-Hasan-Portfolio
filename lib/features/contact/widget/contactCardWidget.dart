@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../common/theme/app_colors.dart';
 import '../../../common/widgets/responsive.dart';
 class ContactCard extends StatefulWidget {
-  final IconData icon;
+  final dynamic icon;
   final String title;
   final String value;
   final String actionLabel;
