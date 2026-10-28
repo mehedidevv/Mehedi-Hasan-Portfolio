@@ -128,107 +128,125 @@ class _SkillCategoryCardState extends State<_SkillCategoryCard>
         curve: Curves.easeOutCubic,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: AppColors.card,
-          borderRadius: BorderRadius.circular(16),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.lerp(AppColors.card, AppColors.surfaceLight, 0.40)!,
+              Color.lerp(
+                AppColors.card,
+                AppColors.primary,
+                _isHovered ? 0.06 : 0.01,
+              )!,
+            ],
+          ),
+          borderRadius: BorderRadius.circular(18),
           border: Border.all(
             color: _isHovered
-                ? AppColors.primary.withValues(alpha: 0.5)
-                : AppColors.border,
+                ? AppColors.primary.withValues(alpha: 0.55)
+                : Colors.white.withValues(alpha: 0.10),
             width: 1.2,
           ),
           boxShadow: [
             BoxShadow(
-              color: _isHovered
-                  ? AppColors.primary.withValues(alpha: 0.12)
-                  : Colors.black.withValues(alpha: 0.15),
+              color: Colors.black.withValues(alpha: 0.35),
               blurRadius: _isHovered ? 28 : 20,
               offset: const Offset(0, 8),
             ),
+            if (_isHovered)
+              BoxShadow(
+                color: AppColors.primary.withValues(alpha: 0.18),
+                blurRadius: 30,
+                offset: const Offset(0, 8),
+              ),
           ],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Continuously Animated Flowing Gradient Accent Line
-              AnimatedBuilder(
-                animation: _gradientAnimation,
-                builder: (context, child) {
-                  return Container(
-                    height: 3.5,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: const [
-                          AppColors.primary,
-                          AppColors.secondary,
-                          AppColors.primary,
-                        ],
-                        begin: Alignment(_gradientAnimation.value - 1.0, 0),
-                        end: Alignment(_gradientAnimation.value + 1.0, 0),
-                      ),
-                    ),
-                  );
-                },
-              ),
-              Padding(
-                padding: EdgeInsets.all(Responsive.isMobile(context) ? 16 : 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Header Row
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: AppColors.primary.withValues(alpha: 0.2),
-                            ),
-                          ),
-                          child: FaIcon(
-                            widget.icon,
-                            size: 18,
-                            color: AppColors.primary,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            widget.category.title,
-                            style: const TextStyle(
-                              color: AppColors.textPrimary,
-                              fontSize: 17,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Container(
-                      height: 1,
+          child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Continuously Animated Flowing Gradient Accent Line
+                AnimatedBuilder(
+                  animation: _gradientAnimation,
+                  builder: (context, child) {
+                    return Container(
+                      height: 3.5,
                       width: double.infinity,
-                      color: AppColors.border.withValues(alpha: 0.6),
-                    ),
-                    const SizedBox(height: 18),
-                    // Skill Chips Wrap
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 10,
-                      children: [
-                        for (final skill in widget.category.skills)
-                          SkillChip(label: skill),
-                      ],
-                    ),
-                  ],
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: const [
+                            AppColors.primary,
+                            AppColors.secondary,
+                            AppColors.primary,
+                          ],
+                          begin: Alignment(_gradientAnimation.value - 1.0, 0),
+                          end: Alignment(_gradientAnimation.value + 1.0, 0),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              ),
-            ],
+                Padding(
+                  padding: EdgeInsets.all(Responsive.isMobile(context) ? 16 : 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Header Row
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withValues(alpha: 0.12),
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: AppColors.primary.withValues(alpha: 0.2),
+                              ),
+                            ),
+                            child: FaIcon(
+                              widget.icon,
+                              size: 18,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              widget.category.title,
+                              style: const TextStyle(
+                                color: AppColors.textPrimary,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Container(
+                        height: 1,
+                        width: double.infinity,
+                        color: AppColors.border.withValues(alpha: 0.6),
+                      ),
+                      const SizedBox(height: 18),
+                      // Skill Chips Wrap
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 10,
+                        children: [
+                          for (final skill in widget.category.skills)
+                            SkillChip(label: skill),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

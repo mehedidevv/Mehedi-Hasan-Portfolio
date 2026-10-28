@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../../core/controllers/nav_controller.dart';
+import '../../core/utils/launcher_util.dart';
 import '../constants/app_data.dart';
 import '../theme/app_colors.dart';
 import 'responsive.dart';
@@ -12,7 +13,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
   const NavBar({super.key, required this.controller, required this.onMenuTap});
 
   @override
-  Size get preferredSize => const Size.fromHeight(72);
+  Size get preferredSize => const Size.fromHeight(74);
 
   @override
   Widget build(BuildContext context) {
@@ -21,108 +22,118 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
 
     return ClipRect(
       child: BackdropFilter(
-        /// Stronger blur + saturation-friendly: content behind looks frosted
         filter: ImageFilter.blur(sigmaX: 28, sigmaY: 28),
         child: Container(
           width: double.infinity,
           height: preferredSize.height,
           decoration: BoxDecoration(
-            /// Liquid glass tint: light catches the top-left, fades toward bottom-right
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Colors.white.withValues(alpha: 0.16),
-                AppColors.background.withValues(alpha: 0.35),
-                Colors.white.withValues(alpha: 0.06),
+                Colors.white.withValues(alpha: 0.12),
+                AppColors.background.withValues(alpha: 0.45),
+                AppColors.primary.withValues(alpha: 0.05),
               ],
-              stops: const [0.0, 0.55, 1.0],
+              stops: const [0.0, 0.6, 1.0],
             ),
             border: Border(
               bottom: BorderSide(
-                color: Colors.white.withValues(alpha: 0.18),
+                color: Colors.white.withValues(alpha: 0.12),
                 width: 1,
               ),
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.30),
-                blurRadius: 24,
-                offset: const Offset(0, 8),
+                color: Colors.black.withValues(alpha: 0.35),
+                blurRadius: 28,
+                offset: const Offset(0, 10),
               ),
             ],
           ),
           child: Stack(
             fit: StackFit.expand,
             children: [
-              /// Specular highlight along the top edge
+              // Specular Top Border Highlight
               Positioned(
                 top: 0,
                 left: 0,
                 right: 0,
-                height: 1,
+                height: 1.2,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
                         Colors.white.withValues(alpha: 0.0),
-                        Colors.white.withValues(alpha: 0.55),
+                        AppColors.primary.withValues(alpha: 0.70),
+                        AppColors.primaryLight.withValues(alpha: 0.50),
                         Colors.white.withValues(alpha: 0.0),
                       ],
                     ),
                   ),
                 ),
               ),
-              /// Soft inner glow under the highlight
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                height: 24,
-                child: IgnorePointer(
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.white.withValues(alpha: 0.10),
-                          Colors.white.withValues(alpha: 0.0),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: hPad),
                 child: Row(
                   children: [
-                    // Logo
+                    // Brand Logo with Neon Glow
                     GestureDetector(
                       onTap: () => controller.scrollTo(controller.homeKey),
                       child: MouseRegion(
                         cursor: SystemMouseCursors.click,
-                        child: RichText(
-                          text: const TextSpan(
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w800,
-                              color: AppColors.textPrimary,
-                              letterSpacing: 0.5,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                              'Mehedi',
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w900,
+                                color: AppColors.textPrimary,
+                                letterSpacing: -0.5,
+                              ),
                             ),
-                            children: [
-                              TextSpan(text: 'Mehedi'),
-                              TextSpan(
-                                text: '.',
-                                style: TextStyle(
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.w900,
+                            Container(
+                              width: 6,
+                              height: 6,
+                              margin: const EdgeInsets.symmetric(horizontal: 3),
+                              decoration: const BoxDecoration(
+                                color: AppColors.primary,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.primary,
+                                    blurRadius: 8,
+                                    spreadRadius: 1,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 6,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppColors.primary.withValues(alpha: 0.12),
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(
+                                  color: AppColors.primary.withValues(alpha: 0.3),
                                 ),
                               ),
-                              TextSpan(text: 'dev'),
-                            ],
-                          ),
+                              child: const Text(
+                                'dev',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w800,
+                                  color: AppColors.primary,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -141,8 +152,8 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                                   controller.scrollTo(controller.navItems[i].key);
                                 },
                               ),
-                            const SizedBox(width: 12),
-                            ResumeButton(),
+                            const SizedBox(width: 14),
+                            const ResumeButton(),
                           ],
                         ),
                       )
@@ -152,6 +163,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                         icon: const Icon(
                           Icons.menu_rounded,
                           color: AppColors.textPrimary,
+                          size: 26,
                         ),
                       ),
                   ],
@@ -187,7 +199,7 @@ class _NavButtonState extends State<_NavButton> {
   Widget build(BuildContext context) {
     final active = widget.isActive;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 3),
+      padding: const EdgeInsets.symmetric(horizontal: 4),
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         onEnter: (_) => setState(() => _isHovered = true),
@@ -199,32 +211,57 @@ class _NavButtonState extends State<_NavButton> {
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             decoration: BoxDecoration(
               color: active
-                  ? AppColors.primary.withValues(alpha: 0.15)
+                  ? AppColors.primary.withValues(alpha: 0.16)
                   : _isHovered
-                  ? Colors.white.withValues(alpha: 0.08)
-                  : Colors.transparent,
-              borderRadius: BorderRadius.circular(10),
+                      ? Colors.white.withValues(alpha: 0.08)
+                      : Colors.transparent,
+              borderRadius: BorderRadius.circular(12),
               border: Border.all(
                 color: active
-                    ? AppColors.primary.withValues(alpha: 0.4)
+                    ? AppColors.primary.withValues(alpha: 0.45)
                     : _isHovered
-                    ? Colors.white.withValues(alpha: 0.15)
-                    : Colors.transparent,
+                        ? Colors.white.withValues(alpha: 0.18)
+                        : Colors.transparent,
               ),
+              boxShadow: active
+                  ? [
+                      BoxShadow(
+                        color: AppColors.primary.withValues(alpha: 0.20),
+                        blurRadius: 10,
+                        offset: const Offset(0, 3),
+                      ),
+                    ]
+                  : [],
             ),
-            child: Text(
-              widget.label,
-              style: TextStyle(
-                color: active
-                    ? AppColors.primary
-                    : _isHovered
-                    ? AppColors.textPrimary
-                    : AppColors.textSecondary,
-                fontWeight: active || _isHovered
-                    ? FontWeight.w700
-                    : FontWeight.w500,
-                fontSize: 13.5,
-              ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (active) ...[
+                  Container(
+                    width: 5,
+                    height: 5,
+                    decoration: const BoxDecoration(
+                      color: AppColors.primary,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                ],
+                Text(
+                  widget.label,
+                  style: TextStyle(
+                    color: active
+                        ? AppColors.primary
+                        : _isHovered
+                            ? AppColors.textPrimary
+                            : AppColors.textSecondary,
+                    fontWeight: active || _isHovered
+                        ? FontWeight.w700
+                        : FontWeight.w500,
+                    fontSize: 13.5,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -234,6 +271,8 @@ class _NavButtonState extends State<_NavButton> {
 }
 
 class ResumeButton extends StatefulWidget {
+  const ResumeButton({super.key});
+
   @override
   State<ResumeButton> createState() => _ResumeButtonState();
 }
@@ -248,36 +287,58 @@ class _ResumeButtonState extends State<ResumeButton> {
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          if (AppData.resumeUrl.isNotEmpty) {
+            LauncherUtil.openUrl(AppData.resumeUrl);
+          } else {
+            LauncherUtil.sendEmail(AppData.email);
+          }
+        },
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+          duration: const Duration(milliseconds: 220),
+          curve: Curves.easeOutCubic,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 9),
           decoration: BoxDecoration(
-            color: _isHovered
-                ? AppColors.primary
-                : AppColors.primary.withValues(alpha: 0.12),
-            borderRadius: BorderRadius.circular(10),
+            gradient: _isHovered
+                ? AppColors.primaryGradient
+                : LinearGradient(
+                    colors: [
+                      AppColors.primary.withValues(alpha: 0.15),
+                      AppColors.primaryLight.withValues(alpha: 0.08),
+                    ],
+                  ),
+            borderRadius: BorderRadius.circular(12),
             border: Border.all(
               color: AppColors.primary,
-              width: 1,
+              width: 1.2,
             ),
-            boxShadow: _isHovered
-                ? [
+            boxShadow: [
               BoxShadow(
-                color: AppColors.primary.withValues(alpha: 0.3),
-                blurRadius: 12,
+                color: AppColors.primary
+                    .withValues(alpha: _isHovered ? 0.40 : 0.15),
+                blurRadius: _isHovered ? 16 : 8,
                 offset: const Offset(0, 4),
               ),
-            ]
-                : [],
+            ],
           ),
-          child: Text(
-            'Resume',
-            style: TextStyle(
-              color: _isHovered ? Colors.black : AppColors.primary,
-              fontWeight: FontWeight.w500,
-              fontSize: 13.5,
-            ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.file_download_outlined,
+                size: 16,
+                color: _isHovered ? Colors.black : AppColors.primary,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                'Resume',
+                style: TextStyle(
+                  color: _isHovered ? Colors.black : AppColors.primary,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 13.5,
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -299,23 +360,51 @@ class AppNavDrawer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(24, 24, 24, 12),
-              child: Text(
-                AppData.name,
-                style: TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w800,
-                ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+              child: Row(
+                children: [
+                  const Text(
+                    AppData.name,
+                    style: TextStyle(
+                      color: AppColors.textPrimary,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Container(
+                    width: 6,
+                    height: 6,
+                    decoration: const BoxDecoration(
+                      color: AppColors.primary,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ],
               ),
             ),
-            const Divider(color: AppColors.border),
+            const Divider(color: AppColors.border, height: 1),
+            const SizedBox(height: 12),
             for (int i = 0; i < controller.navItems.length; i++)
               ListTile(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
                 title: Text(
                   controller.navItems[i].label,
-                  style: const TextStyle(color: AppColors.textSecondary),
+                  style: TextStyle(
+                    color: controller.activeIndex == i
+                        ? AppColors.primary
+                        : AppColors.textSecondary,
+                    fontWeight: controller.activeIndex == i
+                        ? FontWeight.w700
+                        : FontWeight.w500,
+                  ),
+                ),
+                leading: Icon(
+                  Icons.arrow_right_rounded,
+                  color: controller.activeIndex == i
+                      ? AppColors.primary
+                      : AppColors.textMuted,
                 ),
                 onTap: () {
                   Navigator.of(context).pop();
@@ -325,6 +414,14 @@ class AppNavDrawer extends StatelessWidget {
                   });
                 },
               ),
+            const Spacer(),
+            const Padding(
+              padding: EdgeInsets.all(24),
+              child: SizedBox(
+                width: double.infinity,
+                child: ResumeButton(),
+              ),
+            ),
           ],
         ),
       ),

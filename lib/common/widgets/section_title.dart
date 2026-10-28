@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_colors.dart';
 import 'responsive.dart';
 
@@ -22,54 +23,79 @@ class SectionTitle extends StatelessWidget {
     return Column(
       crossAxisAlignment: alignment,
       children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 28,
-              height: 3,
-              decoration: BoxDecoration(
-                gradient: AppColors.primaryGradient,
-                borderRadius: BorderRadius.circular(4),
-              ),
+        // Tag Pill Badge with Gradient Glow Line
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+          decoration: BoxDecoration(
+            color: AppColors.primary.withValues(alpha: 0.10),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: AppColors.primary.withValues(alpha: 0.30),
+              width: 1,
             ),
-            const SizedBox(width: 10),
-            Text(
-              tag.toUpperCase(),
-              style: const TextStyle(
-                color: AppColors.primary,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 2,
-                fontSize: 13,
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withValues(alpha: 0.15),
+                blurRadius: 10,
+                offset: const Offset(0, 2),
               ),
-            ),
-          ],
+            ],
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 6,
+                height: 6,
+                decoration: const BoxDecoration(
+                  color: AppColors.primary,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 8),
+              ShaderMask(
+                shaderCallback: (bounds) => AppColors.primaryGradient.createShader(bounds),
+                child: Text(
+                  tag.toUpperCase(),
+                  style: GoogleFonts.inter(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1.8,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: 16),
         Text(
           title,
           textAlign: alignment == CrossAxisAlignment.center
               ? TextAlign.center
               : TextAlign.start,
-          style: TextStyle(
+          style: GoogleFonts.spaceGrotesk(
             color: AppColors.textPrimary,
-            fontWeight: FontWeight.w800,
-            fontSize: isMobile ? 28 : 36,
+            fontWeight: FontWeight.w700,
+            fontSize: isMobile ? 28 : 38,
+            height: 1.2,
+            letterSpacing: -0.5,
           ),
         ),
         if (subtitle != null) ...[
-          const SizedBox(height: 10),
+          const SizedBox(height: 12),
           SizedBox(
-            width: isMobile ? double.infinity : 560,
+            width: isMobile ? double.infinity : 580,
             child: Text(
               subtitle!,
               textAlign: alignment == CrossAxisAlignment.center
                   ? TextAlign.center
                   : TextAlign.start,
-              style: const TextStyle(
+              style: GoogleFonts.inter(
                 color: AppColors.textSecondary,
-                fontSize: 15.5,
+                fontSize: 16,
                 height: 1.6,
+                fontWeight: FontWeight.w400,
               ),
             ),
           ),

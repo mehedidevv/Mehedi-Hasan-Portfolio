@@ -4,8 +4,6 @@ import 'package:mehedi_portfolio/features/contact/widget/actionButtonWidget.dart
 import 'package:mehedi_portfolio/features/contact/widget/availableBadgeWidget.dart';
 import 'package:mehedi_portfolio/features/contact/widget/contactCardWidget.dart';
 import '../../common/constants/app_data.dart';
-import '../../common/theme/app_colors.dart';
-import '../../common/widgets/responsive.dart';
 import '../../common/widgets/section_container.dart';
 import '../../common/widgets/section_title.dart';
 import '../../core/controllers/nav_controller.dart';

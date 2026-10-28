@@ -26,6 +26,7 @@ class AppData {
   static const String location = 'Mohakhali, Dhaka';
   static const String github = 'https://github.com/mehedidevv';
   static const String linkedin = 'https://www.linkedin.com/in/mehedi-hasan-5a0b2a224/';
+  static const String resumeUrl = '';
 
   static const List<SkillCategoryModel> skillCategories = [
     SkillCategoryModel(
@@ -189,7 +190,7 @@ class AppData {
           'A real-time chat application built with Kotlin & Firebase for '
           'authentication and database-backed messaging.',
       tags: ['Kotlin', 'Firebase', 'Realtime DB'],
-      links: [
+      links: const [
         ProjectLink(label: 'GitHub', url: 'https://github.com/mehedidevv/Chat-Application', type: ProjectLinkType.github),
       ],
     ),

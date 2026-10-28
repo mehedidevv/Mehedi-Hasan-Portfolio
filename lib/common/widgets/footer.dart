@@ -15,25 +15,44 @@ class AppFooter extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: hPad, vertical: 32),
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.border)),
+      padding: EdgeInsets.symmetric(horizontal: hPad, vertical: 36),
+      decoration: BoxDecoration(
+        color: AppColors.surface.withValues(alpha: 0.50),
+        border: Border(
+          top: BorderSide(
+            color: AppColors.border.withValues(alpha: 0.60),
+            width: 1,
+          ),
+        ),
       ),
       child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: Responsive.maxContentWidth),
-          child: isMobile
-              ? Column(
-                  children: [
-                    _socials(),
-                    const SizedBox(height: 16),
-                    _copyright(),
-                  ],
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [_copyright(), _socials()],
+          child: Column(
+            children: [
+              // Top Specular Gradient Line Accent
+              Container(
+                height: 1,
+                width: 160,
+                decoration: const BoxDecoration(
+                  gradient: AppColors.primaryGradient,
                 ),
+              ),
+              const SizedBox(height: 24),
+              isMobile
+                  ? Column(
+                      children: [
+                        _socials(),
+                        const SizedBox(height: 16),
+                        _copyright(),
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [_copyright(), _socials()],
+                    ),
+            ],
+          ),
         ),
       ),
     );
@@ -41,8 +60,12 @@ class AppFooter extends StatelessWidget {
 
   Widget _copyright() {
     return Text(
-      '© ${DateTime.now().year} ${AppData.name}. All rights reserved.',
-      style: const TextStyle(color: AppColors.textMuted, fontSize: 13),
+      '© ${DateTime.now().year} ${AppData.name}. Crafted with Flutter & Liquid Glass aesthetics.',
+      style: const TextStyle(
+        color: AppColors.textMuted,
+        fontSize: 13,
+        fontWeight: FontWeight.w400,
+      ),
     );
   }
 
@@ -50,22 +73,79 @@ class AppFooter extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        _iconBtn(FontAwesomeIcons.github, () => LauncherUtil.openUrl(AppData.github)),
-        const SizedBox(width: 14),
-        _iconBtn(FontAwesomeIcons.linkedin, () => LauncherUtil.openUrl(AppData.linkedin)),
-        const SizedBox(width: 14),
-        _iconBtn(FontAwesomeIcons.envelope, () => LauncherUtil.sendEmail(AppData.email)),
+        _SocialIconButton(
+          icon: FontAwesomeIcons.github,
+          onTap: () => LauncherUtil.openUrl(AppData.github),
+        ),
+        const SizedBox(width: 12),
+        _SocialIconButton(
+          icon: FontAwesomeIcons.linkedin,
+          onTap: () => LauncherUtil.openUrl(AppData.linkedin),
+        ),
+        const SizedBox(width: 12),
+        _SocialIconButton(
+          icon: FontAwesomeIcons.envelope,
+          onTap: () => LauncherUtil.sendEmail(AppData.email),
+        ),
       ],
     );
   }
+}
 
-  Widget _iconBtn(IconData icon, VoidCallback onTap) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(20),
-      child: Padding(
-        padding: const EdgeInsets.all(6.0),
-        child: FaIcon(icon, size: 18, color: AppColors.textSecondary),
+class _SocialIconButton extends StatefulWidget {
+  final IconData icon;
+  final VoidCallback onTap;
+
+  const _SocialIconButton({
+    required this.icon,
+    required this.onTap,
+  });
+
+  @override
+  State<_SocialIconButton> createState() => _SocialIconButtonState();
+}
+
+class _SocialIconButtonState extends State<_SocialIconButton> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: _isHovered
+                ? AppColors.primary.withValues(alpha: 0.18)
+                : AppColors.card,
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: _isHovered
+                  ? AppColors.primary
+                  : AppColors.border,
+              width: 1,
+            ),
+            boxShadow: _isHovered
+                ? [
+                    BoxShadow(
+                      color: AppColors.primary.withValues(alpha: 0.25),
+                      blurRadius: 12,
+                      offset: const Offset(0, 3),
+                    ),
+                  ]
+                : [],
+          ),
+          child: FaIcon(
+            widget.icon,
+            size: 16,
+            color: _isHovered ? AppColors.primary : AppColors.textSecondary,
+          ),
+        ),
       ),
     );
   }

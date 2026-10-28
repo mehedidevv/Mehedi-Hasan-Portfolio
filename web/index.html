@@ -11,17 +11,161 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="Mehedi Hasan Portfolio">
 
-  <meta name="theme-color" content="#0A0E14">
+  <meta name="theme-color" content="#080C14">
 
   <title>Mehedi Hasan | Flutter Developer</title>
   <link rel="manifest" href="manifest.json">
 
+  <!-- Google Fonts Preconnect & Stylesheets -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
   <style>
-    html, body { background-color: #0A0E14; height: 100%; }
+    :root {
+      /* Font Families with Fallbacks */
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-bangla: 'Hind Siliguri', sans-serif;
+
+      /* Responsive Typography (using clamp for smooth scaling) */
+      --text-h1: clamp(2.5rem, 5vw + 1rem, 4.5rem);
+      --text-h2: clamp(1.875rem, 3vw + 1rem, 2.75rem);
+      --text-h3: clamp(1.25rem, 1.5vw + 0.75rem, 1.5rem);
+      --text-subtitle: clamp(1.125rem, 1.5vw + 0.5rem, 1.5rem);
+
+      /* Body sizes */
+      --text-body: clamp(1rem, 0.9643rem + 0.1786vw, 1.0625rem); /* approx 16px to 17px */
+      --text-nav: 0.9375rem; /* 15px */
+      --text-btn: 0.9375rem; /* 15px */
+      --text-desc: 0.9375rem; /* 15px */
+
+      /* Code & small sizes */
+      --text-tech: 0.8125rem; /* 13px */
+      --text-code: 0.875rem; /* 14px */
+      --text-small: 0.875rem; /* 14px */
+      --text-input: 1rem; /* 16px */
+    }
+
+    /* Readability & Base Styles */
+    html, body {
+      background-color: #080C14;
+      height: 100%;
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6; /* 1.6 to 1.7 depending on element */
+      margin: 0;
+      padding: 0;
+
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      color: #E2E8F0; /* Readable contrast in dark mode */
+    }
+
+    /* Limit paragraph width */
+    p {
+      max-width: 65ch;
+      font-weight: 400;
+      font-size: var(--text-body);
+      line-height: 1.65;
+    }
+
+    h1, .hero-name {
+      font-family: var(--font-heading);
+      font-size: var(--text-h1);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+
+    h2, .section-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-h2);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+
+    h3, .card-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-h3);
+      font-weight: 500;
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    .hero-subtitle, .role {
+      font-family: var(--font-body);
+      font-size: var(--text-subtitle);
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    .nav-link {
+      font-family: var(--font-body);
+      font-size: var(--text-nav);
+      font-weight: 500;
+    }
+
+    /* Form elements inherit font */
+    button, .btn, input, select, textarea {
+      font-family: inherit;
+    }
+
+    button, .btn {
+      font-size: var(--text-btn);
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    input, textarea, select {
+      font-size: var(--text-input); /* 16px to prevent iOS zoom */
+      font-weight: 400;
+    }
+
+    .form-label {
+      font-family: var(--font-body);
+      font-size: var(--text-small);
+      font-weight: 500;
+    }
+
+    .project-desc, .card-text {
+      font-family: var(--font-body);
+      font-size: var(--text-desc);
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .tech-tag, .skill-label {
+      font-family: var(--font-mono);
+      font-size: var(--text-tech);
+      font-weight: 400;
+    }
+
+    code, pre, .code-snippet {
+      font-family: var(--font-mono);
+      font-size: var(--text-code);
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .footer-text, .caption {
+      font-family: var(--font-body);
+      font-size: var(--text-small);
+      font-weight: 400;
+    }
+
+    .bangla-text {
+      font-family: var(--font-bangla);
+    }
+
     #loading {
       position: fixed; inset: 0; display: flex; align-items: center;
-      justify-content: center; background: #0A0E14; color: #16C784;
-      font-family: sans-serif; font-size: 16px; letter-spacing: 1px;
+      justify-content: center; background: #080C14; color: #16C784;
+      font-family: var(--font-body); font-size: 16px; letter-spacing: 1px;
     }
   </style>
 </head>

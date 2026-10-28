@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../common/constants/app_data.dart';
 import '../../../common/theme/app_colors.dart';
 import '../../../common/widgets/responsive.dart';
@@ -39,11 +40,11 @@ class HomeView extends StatelessWidget {
                 Text(
                   'Hi, I\'m ${AppData.name}',
                   textAlign: isMobile ? TextAlign.center : TextAlign.start,
-                  style: TextStyle(
+                  style: GoogleFonts.spaceGrotesk(
                     color: AppColors.textPrimary,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     fontSize: isMobile ? 32 : 48,
-                    height: 1.15,
+                    height: 1.2,
                   ),
                 ),
                 const SizedBox(height: 12),

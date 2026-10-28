@@ -97,20 +97,37 @@ class _InfoStatState extends State<_InfoStat> {
         width: 135,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
-          color: AppColors.card,
-          borderRadius: BorderRadius.circular(12),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.lerp(AppColors.card, AppColors.surfaceLight, 0.45)!,
+              Color.lerp(
+                AppColors.card,
+                AppColors.primary,
+                _hover ? 0.08 : 0.02,
+              )!,
+            ],
+          ),
+          borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: _hover ? AppColors.primary : AppColors.border,
+            color: _hover
+                ? AppColors.primary
+                : Colors.white.withValues(alpha: 0.12),
             width: 1.2,
           ),
           boxShadow: [
             BoxShadow(
-              color: _hover
-                  ? AppColors.primary.withValues(alpha: 0.15)
-                  : Colors.transparent,
+              color: Colors.black.withValues(alpha: 0.30),
               blurRadius: 16,
               offset: const Offset(0, 6),
             ),
+            if (_hover)
+              BoxShadow(
+                color: AppColors.primary.withValues(alpha: 0.22),
+                blurRadius: 20,
+                offset: const Offset(0, 6),
+              ),
           ],
         ),
         child: Column(
@@ -141,9 +158,9 @@ class _InfoStatState extends State<_InfoStat> {
             Text(
               widget.label,
               style: TextStyle(
-                color:
-                    _hover ? AppColors.textPrimary : AppColors.textSecondary,
+                color: _hover ? AppColors.primary : AppColors.textPrimary,
                 fontSize: 12.5,
+                fontWeight: FontWeight.w600,
                 height: 1.25,
               ),
             ),

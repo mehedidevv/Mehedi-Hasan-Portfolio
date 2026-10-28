@@ -11,12 +11,13 @@ class ContactCard extends StatefulWidget {
   final VoidCallback? onTap;
 
   const ContactCard({
+    Key? key,
     required this.icon,
     required this.title,
     required this.value,
     required this.actionLabel,
     this.onTap,
-  });
+  }) : super(key: key);
 
   @override
   State<ContactCard> createState() => _ContactCardState();
@@ -181,8 +182,9 @@ class _ContactCardState extends State<ContactCard>
                         widget.value,
                         textAlign: TextAlign.center,
                         style: const TextStyle(
-                          color: AppColors.textSecondary,
-                          fontSize: 13.5,
+                          color: AppColors.textPrimary,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       const SizedBox(height: 14),

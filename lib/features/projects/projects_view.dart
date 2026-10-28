@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../common/constants/app_data.dart';
 import '../../common/theme/app_colors.dart';
 import '../../common/widgets/responsive.dart';
@@ -302,22 +303,37 @@ class _ProjectCardState extends State<_ProjectCard> {
           transform: Matrix4.translationValues(0, _isHovered ? -6 : 0, 0),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppColors.card,
-            borderRadius: BorderRadius.circular(20),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color.lerp(AppColors.card, AppColors.surfaceLight, 0.45)!,
+                Color.lerp(
+                  AppColors.card,
+                  AppColors.primary,
+                  _isHovered ? 0.08 : 0.02,
+                )!,
+              ],
+            ),
+            borderRadius: BorderRadius.circular(22),
             border: Border.all(
               color: _isHovered
-                  ? AppColors.primary.withValues(alpha: 0.5)
-                  : AppColors.border,
+                  ? AppColors.primary.withValues(alpha: 0.60)
+                  : Colors.white.withValues(alpha: 0.10),
               width: 1.2,
             ),
             boxShadow: [
               BoxShadow(
-                color: _isHovered
-                    ? AppColors.primary.withValues(alpha: 0.12)
-                    : Colors.black.withValues(alpha: 0.2),
-                blurRadius: _isHovered ? 24 : 16,
+                color: Colors.black.withValues(alpha: 0.35),
+                blurRadius: _isHovered ? 28 : 18,
                 offset: const Offset(0, 8),
               ),
+              if (_isHovered)
+                BoxShadow(
+                  color: AppColors.primary.withValues(alpha: 0.18),
+                  blurRadius: 28,
+                  offset: const Offset(0, 8),
+                ),
             ],
           ),
           child: Column(
@@ -413,24 +429,28 @@ class _ProjectCardState extends State<_ProjectCard> {
                   for (final tag in widget.project.tags)
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
+                        horizontal: 11,
+                        vertical: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceLight,
-                        borderRadius: BorderRadius.circular(20),
+                        color: _isHovered
+                            ? AppColors.primary.withValues(alpha: 0.14)
+                            : AppColors.surfaceLight.withValues(alpha: 0.85),
+                        borderRadius: BorderRadius.circular(10),
                         border: Border.all(
                           color: _isHovered
-                              ? AppColors.primary.withValues(alpha: 0.3)
-                              : AppColors.border.withValues(alpha: 0.5),
+                              ? AppColors.primary.withValues(alpha: 0.35)
+                              : Colors.white.withValues(alpha: 0.08),
                         ),
                       ),
                       child: Text(
                         tag,
-                        style: const TextStyle(
-                          color: AppColors.textSecondary,
+                        style: GoogleFonts.jetBrainsMono(
+                          color: _isHovered
+                              ? AppColors.primary
+                              : AppColors.textPrimary,
                           fontSize: 11.5,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ),
