@@ -1,7 +1,8 @@
-import '../../core/models/project_model.dart';
-import '../../core/models/experience_model.dart';
-import '../../core/models/skill_category_model.dart';
-import 'appImage.dart';
+import '../../features/education/model/education_model.dart';
+import '../../features/experience/model/experience_model.dart';
+import '../../features/projects/model/project_model.dart';
+import '../../features/skills/model/skill_category_model.dart';
+import 'app_images.dart';
 
 /// All personal / CV data lives here so views stay dumb & reusable.
 /// Update this file to change the whole site's content.
@@ -27,6 +28,9 @@ class AppData {
   static const String github = 'https://github.com/mehedidevv';
   static const String linkedin = 'https://www.linkedin.com/in/mehedi-hasan-5a0b2a224/';
   static const String resumeUrl = 'https://drive.google.com/file/d/1XJ0JP0rO0l42vxM3Yt2DROPwwcSYVdIm/view?usp=drive_link';
+
+  /// Web3Forms Access Key for contact form email delivery
+  static const String web3FormsAccessKey = '67893dcb-90bc-4f21-92c3-1eb1aaacc2c8';
 
   static const List<SkillCategoryModel> skillCategories = [
     SkillCategoryModel(
@@ -68,8 +72,6 @@ class AppData {
     ),
   ];
 
-
-
   static const List<ExperienceModel> experience = [
     ExperienceModel(
       company: 'Betopia Group',
@@ -97,11 +99,9 @@ class AppData {
   );
 
   static final List<ProjectModel> projects = [
-
-
-    ProjectModel(
+    const ProjectModel(
       title: 'LIKIDY',
-      image: AppImages.Likidy,
+      image: AppImages.likidy,
       description:
           'Likidy is Algeria’s negotiation-first marketplace, designed to make buying, '
           'selling, and offering services easier and more efficient. '
@@ -111,15 +111,14 @@ class AppData {
           'and a dedicated free-items category, Likidy creates a trusted, convenient, '
           'and community-driven marketplace.',
       tags: ['Flutter', 'GetX', 'Firebase', 'Socket.io', 'Clean Architecture'],
-      links: const [
+      links: [
         ProjectLink(
             label: 'Play Store', url: 'https://play.google.com/store/apps/details?id=com.likidibuysell.app&hl=en', type: ProjectLinkType.playStore),
         ProjectLink(
             label: 'App Store', url: 'https://apps.apple.com/us/app/likidy-app/id6790383881', type: ProjectLinkType.appStore),
       ],
     ),
-
-    ProjectModel(
+    const ProjectModel(
       title: 'Prime Pilates',
       image: AppImages.primePalates,
       description:
@@ -129,71 +128,59 @@ class AppData {
           ' Featuring an elegant interface, personalized schedules, and a seamless booking experience, '
           'Prime Pilates helps users stay organized, motivated, and consistent throughout their fitness journey.',
       tags: ['Flutter', 'GetX', 'Firebase', 'Socket.io', 'Clean Architecture','Solid Principles', 'OOP'],
-      links: const [
+      links: [
         ProjectLink(
             label: 'Play Store', url: 'https://play.google.com/store/apps/details?id=com.prime.pilates.app&hl=en', type: ProjectLinkType.playStore),
         ProjectLink(
             label: 'App Store', url: 'https://apps.apple.com/lv/app/prime-pilates/id6741531586', type: ProjectLinkType.appStore),
       ],
     ),
-
-
-    ProjectModel(
+    const ProjectModel(
       title: 'Towqi – Vet & Animal Care',
       image: AppImages.towqiVet,
       description:
       'A digital veterinary and animal care platform in Saudi Arabia that helps animal owners and breeders find and access veterinary services nearby. Search for the nearest veterinarian, clinic, animal hospital, or request home veterinary visits.',
       tags: ['Flutter', 'GetX', 'Firebase', 'Socket.io', 'Clean Architecture','Solid Principles', 'Google Maps'],
-      links: const [
+      links: [
         ProjectLink(
             label: 'Play Store', url: 'https://play.google.com/store/apps/details?id=com.app.tuqi', type: ProjectLinkType.playStore),
         ProjectLink(
             label: 'App Store', url: 'https://apps.apple.com/us/app/towqi-vet-animal-care/id6751596650', type: ProjectLinkType.appStore),
       ],
     ),
-
-    ProjectModel(
+    const ProjectModel(
       title: 'Sougk',
       image: AppImages.souag,
       description:
       'A buying and selling app designed to provide users with a fast and easy experience for listing products and services. Connects sellers '
           'and buyers across Sudan with direct communication to buy and sell products such as electronics, cars, and real estate.',
-
-      tags: ['Flutter', 'GetX', 'Firebase', 'Socket.io', 'Clean Architecture','Solid Principles',],
-      links: const [
+      tags: ['Flutter', 'GetX', 'Firebase', 'Socket.io', 'Clean Architecture','Solid Principles'],
+      links: [
         ProjectLink(
             label: 'Play Store', url: 'https://play.google.com/store/apps/details?id=com.sougk.sd', type: ProjectLinkType.playStore),
-
       ],
     ),
-
-
-    ProjectModel(
+    const ProjectModel(
       title: 'Run BD',
       image: AppImages.runBD,
       description:
       'RunBD is an all-in-one vehicle marketplace and service platform designed to simplify buying and selling cars and motorcycles. The app also offers vehicle rentals, file processing, document services, workshops, accessories, vehicle exchanges, and other automotive solutions through a seamless, user-friendly experience.',
-
-      tags: ['Flutter', 'GetX', 'Firebase', 'Socket.io', 'Clean Architecture','Solid Principles',],
-      links: const [
+      tags: ['Flutter', 'GetX', 'Firebase', 'Socket.io', 'Clean Architecture','Solid Principles'],
+      links: [
         ProjectLink(
             label: 'Play Store', url: 'https://play.google.com/store/apps/details?id=org.globalrunbd.app&referrer=utm_source%3Dapkpure.com', type: ProjectLinkType.playStore),
-
       ],
     ),
-
-
-     ProjectModel(
+    const ProjectModel(
       title: 'Chat Application',
       image: AppImages.chatApp,
       description:
           'A real-time chat application built with Kotlin & Firebase for '
           'authentication and database-backed messaging.',
       tags: ['Kotlin', 'Firebase', 'Realtime DB'],
-      links: const [
+      links: [
         ProjectLink(label: 'GitHub', url: 'https://github.com/mehedidevv/Chat-Application', type: ProjectLinkType.github),
       ],
     ),
-
   ];
 }

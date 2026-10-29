@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'common/theme/app_theme.dart';
-import 'features/layout/main_layout.dart';
+import 'features/layout/view/main_layout_view.dart';
 
 void main() {
   runApp(const PortfolioApp());
@@ -11,11 +12,11 @@ class PortfolioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Mehedi Hasan | Flutter Developer',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
-      home: const MainLayout(),
+      home: const MainLayoutView(),
     );
   }
 }

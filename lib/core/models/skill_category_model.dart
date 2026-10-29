@@ -1,9 +1,1 @@
-class SkillCategoryModel {
-  final String title;
-  final List<String> skills;
-
-  const SkillCategoryModel({
-    required this.title,
-    required this.skills,
-  });
-}
+export 'package:mehedi_portfolio/features/skills/model/skill_category_model.dart';

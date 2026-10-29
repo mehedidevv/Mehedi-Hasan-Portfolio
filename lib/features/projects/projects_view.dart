@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../common/constants/app_data.dart';
 import '../../common/theme/app_colors.dart';
 import '../../common/widgets/responsive.dart';
 import '../../common/widgets/section_container.dart';
 import '../../common/widgets/section_title.dart';
-import '../../core/controllers/nav_controller.dart';
+import '../layout/controller/main_layout_controller.dart';
+import 'controller/projects_controller.dart';
 import 'widget/project_card.dart';
 
 class ProjectsView extends StatelessWidget {
-  final NavController controller;
+  final MainLayoutController controller;
   const ProjectsView({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
+    final projectsController = Get.put(ProjectsController());
+
     int columns = 1;
     if (Responsive.isDesktop(context)) {
       columns = 3;
@@ -44,10 +48,14 @@ class ProjectsView extends StatelessWidget {
               crossAxisCount: columns,
               crossAxisSpacing: 20,
               mainAxisSpacing: 20,
-              mainAxisExtent: isMobile ? 540 : 520, // Increased slightly to accommodate the animated line
+              mainAxisExtent: isMobile ? 530 : 510,
             ),
             itemBuilder: (context, index) {
-              return ProjectCard(project: AppData.projects[index]);
+              final project = AppData.projects[index];
+              return ProjectCard(
+                project: project,
+                onTap: () => projectsController.showProjectDetails(context, project),
+              );
             },
           ),
         ],
